@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Musculação Natural — Do Zero ao Avançado</title>
+<meta name="description" content="Aprenda os fundamentos da musculação natural, hipertrofia, treinamento, alimentação e recuperação em um guia completo do básico ao avançado.">
+<meta property="og:title" content="Musculação Natural — Do Zero ao Avançado">
+<meta property="og:description" content="Um guia completo para quem quer construir um físico mais musculoso e definido naturalmente, entendendo treinamento, hipertrofia, alimentação e recuperação.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --bg: #05070a;
+  --bg-alt: #0a0f18;
+  --surface: #0f1620;
+  --surface-2: #141d2b;
+  --line: #1c2633;
+  --line-soft: #151d28;
+
+  --blue: #1560ff;
+  --blue-bright: #3b82ff;
+  --blue-dim: #0d2a5c;
+  --blue-glow: rgba(21,96,255,0.35);
+
+  --text: #f3f5f8;
+  --text-dim: #9aa5b5;
+  --text-faint: #5e6a7c;
+
+  --font-display: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 18px;
+
+  --ease: cubic-bezier(.22,.68,0,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+html,body{
+  background:var(--bg);
+  color:var(--text);
+  width:100%;
+  overflow-x:hidden;
+}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; cursor:pointer; }
+h1,h2,h3,h4{
+  font-family:var(--font-display);
+  margin:0;
+  letter-spacing:-0.02em;
+  font-weight:800;
+}
+p{ margin:0; }
+ul{ margin:0; padding:0; list-style:none; }
+
+:focus-visible{
+  outline:2px solid var(--blue-bright);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.container{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 24px;
+}
+@media(max-width:640px){
+  .container{ padding:0 20px; }
+}
+
+section{ position:relative; }
+
+.eyebrow{
+  font-size:13px;
+  font-weight:600;
+  color:var(--blue-bright);
+  margin-bottom:14px;
+  display:block;
+}
+
+.section-head{
+  max-width:640px;
+  margin-bottom:48px;
+}
+.section-head h2{
+  font-size:clamp(28px,4.2vw,42px);
+  line-height:1.15;
+  color:var(--text);
+}
+.section-head p{
+  margin-top:16px;
+  font-size:17px;
+  color:var(--text-dim);
+  line-height:1.65;
+  max-width:60ch;
+}
+.section-head.center{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+.section-head.center p{ margin-left:auto; margin-right:auto; }
+
+/* reveal on scroll */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.is-visible{ opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; transition:none; }
+  *{ scroll-behavior:auto !important; animation:none !important; }
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:15px;
+  padding:17px 30px;
+  border-radius:999px;
+  border:none;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--blue);
+  color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,0.15) inset, 0 12px 30px -10px var(--blue-glow);
+}
+.btn-primary:hover{
+  background:var(--blue-bright);
+  transform:translateY(-2px);
+  box-shadow:0 1px 0 rgba(255,255,255,0.2) inset, 0 16px 36px -10px var(--blue-glow);
+}
+.btn-primary:active{ transform:translateY(0); }
+.btn-ghost{
+  background:transparent;
+  color:var(--text);
+  border:1px solid var(--line);
+}
+.btn-ghost:hover{ border-color:var(--blue-bright); color:var(--blue-bright); }
+.btn-block{ width:100%; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  padding:18px 0;
+  background:rgba(5,7,10,0);
+  border-bottom:1px solid transparent;
+  transition:background .3s var(--ease), border-color .3s var(--ease), padding .3s var(--ease);
+}
+.nav.scrolled{
+  background:rgba(5,7,10,0.85);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-bottom-color:var(--line-soft);
+  padding:14px 0;
+}
+.nav .container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.nav-mark{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:16px;
+  letter-spacing:-0.01em;
+}
+.nav-mark span{ color:var(--blue-bright); }
+.nav-actions{ display:flex; align-items:center; gap:16px; }
+.theme-toggle{
+  width:38px; height:38px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--text-dim);
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px;
+  transition:border-color .2s;
+}
+.theme-toggle:hover{ border-color:var(--blue-bright); color:var(--text); }
+.nav .btn{ padding:11px 20px; font-size:13.5px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  padding:150px 0 90px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-10%; right:-10%;
+  width:640px; height:640px;
+  background:radial-gradient(circle, var(--blue-glow) 0%, transparent 70%);
+  opacity:.5;
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr 0.95fr;
+  gap:56px;
+  align-items:center;
+  position:relative;
+  z-index:1;
+}
+.hero-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text-dim);
+  background:var(--surface);
+  border:1px solid var(--line);
+  padding:8px 16px;
+  border-radius:999px;
+  margin-bottom:26px;
+}
+.hero-kicker::before{
+  content:'';
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--blue-bright);
+  box-shadow:0 0 0 3px var(--blue-dim);
+}
+.hero h1{
+  font-size:clamp(34px,5.4vw,58px);
+  line-height:1.08;
+  color:var(--text);
+  max-width:15ch;
+}
+.hero-sub{
+  margin-top:22px;
+  font-size:18px;
+  line-height:1.6;
+  color:var(--text-dim);
+  max-width:46ch;
+}
+.hero-actions{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:34px;
+  flex-wrap:wrap;
+}
+.hero-trust{
+  margin-top:30px;
+  display:flex;
+  gap:28px;
+  flex-wrap:wrap;
+}
+.hero-trust-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:13.5px;
+  color:var(--text-faint);
+}
+.hero-trust-item svg{ flex-shrink:0; color:var(--blue-bright); }
+
+/* mockup */
+.hero-visual{ position:relative; display:flex; justify-content:center; }
+.mockup-stage{
+  position:relative;
+  width:100%;
+  max-width:400px;
+  aspect-ratio:3/4;
+}
+.mockup-book{
+  position:absolute;
+  inset:0;
+  border-radius:16px;
+  background:
+    linear-gradient(155deg, #0e1724 0%, #060a10 65%),
+    radial-gradient(circle at 75% 15%, var(--blue-glow), transparent 55%);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 40px 80px -24px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.02) inset;
+  padding:38px 32px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transform:perspective(1200px) rotateY(-8deg) rotateX(2deg);
+  transition:transform .6s var(--ease);
+}
+.mockup-stage:hover .mockup-book{
+  transform:perspective(1200px) rotateY(-3deg) rotateX(1deg);
+}
+.mockup-badge{
+  align-self:flex-start;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.04em;
+  color:var(--blue-bright);
+  border:1px solid var(--blue-dim);
+  background:rgba(21,96,255,0.1);
+  padding:6px 12px;
+  border-radius:999px;
+}
+.mockup-title{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:30px;
+  line-height:1.12;
+  color:#fff;
+  margin-top:28px;
+}
+.mockup-title em{
+  font-style:normal;
+  color:var(--blue-bright);
+  display:block;
+}
+.mockup-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:18px;
+}
+.mockup-foot-label{ font-size:11px; color:var(--text-faint); }
+.mockup-foot-val{ font-family:var(--font-display); font-weight:800; font-size:15px; color:var(--text); margin-top:4px; }
+
+.mockup-float{
+  position:absolute;
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 16px;
+  font-size:12.5px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  box-shadow:0 20px 40px -16px rgba(0,0,0,0.6);
+  animation:float 5s ease-in-out infinite;
+}
+.mockup-float svg{ color:var(--blue-bright); flex-shrink:0; }
+.mockup-float.f1{ top:8%; left:-8%; animation-delay:0s; }
+.mockup-float.f2{ bottom:14%; right:-10%; animation-delay:1.2s; }
+@keyframes float{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+@media (prefers-reduced-motion: reduce){
+  .mockup-float{ animation:none; }
+}
+
+@media(max-width:980px){
+  .hero-grid{ grid-template-columns:1fr; gap:60px; }
+  .hero{ padding:130px 0 70px; text-align:left; }
+  .mockup-stage{ max-width:320px; margin:0 auto; }
+  .mockup-float.f1{ left:-4%; }
+  .mockup-float.f2{ right:-4%; }
+}
+@media(max-width:480px){
+  .hero-actions{ flex-direction:column; align-items:stretch; }
+  .hero-actions .btn{ width:100%; }
+  .mockup-float{ display:none; }
+}
+
+/* ============================================================
+   PROBLEM
+   ============================================================ */
+.problem{
+  background:var(--bg-alt);
+  padding:110px 0;
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.problem-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:var(--line-soft);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-l);
+  overflow:hidden;
+}
+.problem-item{
+  background:var(--bg-alt);
+  padding:28px 30px;
+  display:flex;
+  gap:16px;
+}
+.problem-item svg{ flex-shrink:0; margin-top:3px; color:var(--text-faint); }
+.problem-item p{ font-size:15px; color:var(--text-dim); line-height:1.55; }
+.problem-item strong{ color:var(--text); font-weight:600; }
+@media(max-width:760px){
+  .problem{ padding:80px 0; }
+  .problem-list{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   SOLUTION / PILLARS
+   ============================================================ */
+.solution{ padding:120px 0; }
+.pillars{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.pillar{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-m);
+  padding:30px 26px;
+  transition:border-color .25s var(--ease), transform .25s var(--ease);
+}
+.pillar:hover{ border-color:var(--blue-dim); transform:translateY(-3px); }
+.pillar-icon{
+  width:44px; height:44px;
+  border-radius:10px;
+  background:var(--blue-dim);
+  color:var(--blue-bright);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:20px;
+}
+.pillar h3{
+  font-size:16.5px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:8px;
+}
+.pillar p{ font-size:14px; color:var(--text-dim); line-height:1.6; }
+@media(max-width:860px){
+  .pillars{ grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:560px){
+  .pillars{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   MODULES / CHAPTERS
+   ============================================================ */
+.modules{
+  padding:120px 0;
+  background:var(--bg-alt);
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.module-list{ display:flex; flex-direction:column; }
+.module-row{
+  display:grid;
+  grid-template-columns:72px 1fr;
+  gap:24px;
+  align-items:start;
+  padding:26px 0;
+  border-bottom:1px solid var(--line-soft);
+  transition:padding-left .25s var(--ease);
+}
+.module-row:first-child{ padding-top:0; }
+.module-row:last-child{ border-bottom:none; }
+.module-row:hover{ padding-left:8px; }
+.module-num{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:26px;
+  color:var(--text-faint);
+  line-height:1;
+  transition:color .25s var(--ease);
+}
+.module-row:hover .module-num{ color:var(--blue-bright); }
+.module-body h3{
+  font-size:18px;
+  font-weight:700;
+  color:var(--text);
+}
+.module-body p{
+  margin-top:6px;
+  font-size:14.5px;
+  color:var(--text-dim);
+  line-height:1.6;
+  max-width:60ch;
+}
+@media(max-width:600px){
+  .module-row{ grid-template-columns:44px 1fr; gap:14px; padding:20px 0; }
+  .module-num{ font-size:20px; }
+}
+
+/* ============================================================
+   DIFFERENTIATOR / COMPARISON
+   ============================================================ */
+.diff{ padding:120px 0; }
+.compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:8px;
+}
+.compare-card{
+  border-radius:var(--radius-l);
+  padding:34px 30px;
+}
+.compare-card.bad{
+  background:var(--surface);
+  border:1px solid var(--line);
+}
+.compare-card.good{
+  background:linear-gradient(165deg, var(--surface-2), var(--surface));
+  border:1px solid var(--blue-dim);
+  box-shadow:0 30px 60px -30px var(--blue-glow);
+}
+.compare-label{
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--text-faint);
+  margin-bottom:18px;
+  display:block;
+}
+.compare-card.good .compare-label{ color:var(--blue-bright); }
+.compare-card h3{
+  font-size:19px;
+  font-weight:700;
+  margin-bottom:20px;
+  color:var(--text);
+}
+.compare-card ul{ display:flex; flex-direction:column; gap:13px; }
+.compare-card li{
+  font-size:14.5px;
+  color:var(--text-dim);
+  display:flex;
+  gap:10px;
+  line-height:1.5;
+}
+.compare-card li svg{ flex-shrink:0; margin-top:2px; }
+.compare-card.bad li svg{ color:var(--text-faint); }
+.compare-card.good li svg{ color:var(--blue-bright); }
+@media(max-width:760px){
+  .compare{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   WHO FOR / NOT FOR
+   ============================================================ */
+.who{
+  padding:120px 0;
+  background:var(--bg-alt);
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.who-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:20px;
+  align-items:start;
+}
+.who-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-l);
+  padding:36px;
+}
+.who-card h3{
+  font-size:20px;
+  margin-bottom:24px;
+  color:var(--text);
+}
+.who-card.not h3{ color:var(--text-dim); }
+.who-list{ display:flex; flex-direction:column; gap:16px; }
+.who-item{ display:flex; gap:12px; align-items:flex-start; }
+.who-item svg{ flex-shrink:0; margin-top:2px; }
+.who-item span{ font-size:15px; color:var(--text-dim); line-height:1.5; }
+.who-card:not(.not) .who-item svg{ color:var(--blue-bright); }
+.who-card.not{ background:transparent; border-style:dashed; }
+.who-card.not .who-item svg{ color:var(--text-faint); }
+@media(max-width:860px){
+  .who-grid{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   PRODUCT SHOWCASE
+   ============================================================ */
+.showcase{ padding:120px 0; overflow:hidden; }
+.showcase-stage{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  align-items:end;
+  margin-top:20px;
+}
+.device{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-l);
+  padding:18px;
+  transition:transform .3s var(--ease), border-color .3s var(--ease);
+}
+.device:hover{ transform:translateY(-6px); border-color:var(--blue-dim); }
+.device-screen{
+  border-radius:10px;
+  background:linear-gradient(155deg,#0e1724,#060a10);
+  aspect-ratio:3/4;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:22px 18px;
+  position:relative;
+  overflow:hidden;
+}
+.device-screen::after{
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(circle at 80% 10%, var(--blue-glow), transparent 60%);
+  opacity:.6;
+}
+.device.notebook .device-screen{ aspect-ratio:16/10; }
+.device.phone{ max-width:200px; margin:0 auto; }
+.device-chip{
+  position:relative; z-index:1;
+  font-size:9px; font-weight:700; color:var(--blue-bright);
+  border:1px solid var(--blue-dim); background:rgba(21,96,255,.1);
+  padding:4px 9px; border-radius:999px; align-self:flex-start;
+}
+.device-caption-title{
+  position:relative; z-index:1;
+  font-family:var(--font-display); font-weight:800; color:#fff; font-size:16px; line-height:1.25;
+}
+.device-lines{ position:relative; z-index:1; display:flex; flex-direction:column; gap:7px; }
+.device-lines span{ display:block; height:6px; border-radius:4px; background:rgba(255,255,255,0.1); }
+.device-lines span:nth-child(1){ width:90%; }
+.device-lines span:nth-child(2){ width:70%; }
+.device-lines span:nth-child(3){ width:80%; }
+.device-caption{
+  text-align:center;
+  margin-top:16px;
+  font-size:13px;
+  color:var(--text-faint);
+  font-weight:500;
+}
+@media(max-width:860px){
+  .showcase-stage{ grid-template-columns:1fr; gap:36px; }
+  .device.phone{ max-width:240px; }
+}
+
+/* ============================================================
+   WHAT YOU GET
+   ============================================================ */
+.includes{
+  padding:120px 0;
+  background:var(--bg-alt);
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.includes-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:var(--line-soft);
+  border:1px solid var(--line-soft);
+  border-radius:var(--radius-l);
+  overflow:hidden;
+}
+.includes-item{
+  background:var(--bg-alt);
+  padding:26px 28px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+.includes-ico{
+  width:40px; height:40px;
+  border-radius:9px;
+  background:var(--blue-dim);
+  color:var(--blue-bright);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.includes-item span{ font-size:15px; color:var(--text); font-weight:500; }
+@media(max-width:700px){
+  .includes-grid{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   CLARITY / BENEFITS
+   ============================================================ */
+.clarity{ padding:120px 0; }
+.clarity-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px 40px;
+}
+.clarity-item{
+  display:flex;
+  gap:16px;
+  padding:4px 0;
+}
+.clarity-num{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:14px;
+  color:var(--blue-bright);
+  flex-shrink:0;
+  margin-top:2px;
+}
+.clarity-item p{ font-size:15.5px; color:var(--text-dim); line-height:1.55; }
+@media(max-width:700px){
+  .clarity-list{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   OFFER
+   ============================================================ */
+.offer{
+  padding:130px 0;
+  background:var(--bg-alt);
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+  position:relative;
+  overflow:hidden;
+}
+.offer::before{
+  content:'';
+  position:absolute;
+  bottom:-20%; left:50%;
+  transform:translateX(-50%);
+  width:800px; height:400px;
+  background:radial-gradient(ellipse, var(--blue-glow), transparent 70%);
+  opacity:.4;
+  pointer-events:none;
+}
+.offer-card{
+  position:relative;
+  z-index:1;
+  max-width:560px;
+  margin:0 auto;
+  background:linear-gradient(165deg, var(--surface-2), var(--surface));
+  border:1px solid var(--blue-dim);
+  border-radius:var(--radius-l);
+  padding:52px 44px;
+  text-align:center;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,0.6);
+}
+.offer-tag{
+  display:inline-block;
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--blue-bright);
+  background:rgba(21,96,255,0.1);
+  border:1px solid var(--blue-dim);
+  padding:7px 16px;
+  border-radius:999px;
+  margin-bottom:22px;
+}
+.offer-card h3{
+  font-size:24px;
+  color:var(--text);
+  margin-bottom:28px;
+  line-height:1.3;
+}
+.offer-price-row{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:6px;
+  flex-wrap:wrap;
+}
+.offer-old{
+  font-size:18px;
+  color:var(--text-faint);
+  text-decoration:line-through;
+}
+.offer-new{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:48px;
+  color:var(--text);
+}
+.offer-note{
+  font-size:13px;
+  color:var(--text-faint);
+  margin-bottom:34px;
+}
+.offer-features{
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+  text-align:left;
+  margin-bottom:34px;
+  padding:24px;
+  background:var(--bg);
+  border-radius:var(--radius-m);
+  border:1px solid var(--line-soft);
+}
+.offer-features li{
+  display:flex;
+  gap:10px;
+  font-size:14px;
+  color:var(--text-dim);
+}
+.offer-features svg{ color:var(--blue-bright); flex-shrink:0; margin-top:1px; }
+.offer-fine{
+  margin-top:18px;
+  font-size:12.5px;
+  color:var(--text-faint);
+}
+
+/* ============================================================
+   GUARANTEE
+   ============================================================ */
+.guarantee{ padding:100px 0; }
+.guarantee-box{
+  max-width:720px;
+  margin:0 auto;
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-l);
+  padding:36px;
+}
+.guarantee-box svg{ flex-shrink:0; color:var(--blue-bright); }
+.guarantee-box h3{ font-size:17px; color:var(--text); margin-bottom:8px; }
+.guarantee-box p{ font-size:14.5px; color:var(--text-dim); line-height:1.6; }
+.guarantee-placeholder{
+  display:inline-block;
+  margin-top:10px;
+  font-size:12.5px;
+  font-style:italic;
+  color:var(--text-faint);
+  border:1px dashed var(--line);
+  padding:6px 12px;
+  border-radius:var(--radius-s);
+}
+@media(max-width:600px){
+  .guarantee-box{ flex-direction:column; padding:28px; }
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq{
+  padding:120px 0;
+  background:var(--bg-alt);
+  border-top:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.faq-list{ max-width:760px; margin:0 auto; }
+.faq-item{
+  border-bottom:1px solid var(--line-soft);
+}
+.faq-item:first-child{ border-top:1px solid var(--line-soft); }
+.faq-q{
+  width:100%;
+  background:none;
+  border:none;
+  padding:24px 4px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  text-align:left;
+  font-family:var(--font-body);
+  font-size:16px;
+  font-weight:600;
+  color:var(--text);
+}
+.faq-q svg{
+  flex-shrink:0;
+  color:var(--text-faint);
+  transition:transform .3s var(--ease);
+}
+.faq-item.open .faq-q svg{ transform:rotate(45deg); color:var(--blue-bright); }
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s var(--ease);
+}
+.faq-a-inner{
+  padding:0 4px 24px;
+  font-size:14.5px;
+  color:var(--text-dim);
+  line-height:1.65;
+  max-width:65ch;
+}
+
+/* ============================================================
+   FINAL CTA
+   ============================================================ */
+.final-cta{
+  padding:150px 0 130px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.final-cta::before{
+  content:'';
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:900px; height:500px;
+  background:radial-gradient(ellipse, var(--blue-glow), transparent 70%);
+  opacity:.35;
+  pointer-events:none;
+}
+.final-cta h2{
+  font-size:clamp(32px,5.5vw,54px);
+  line-height:1.1;
+  color:var(--text);
+  max-width:16ch;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+.final-cta p{
+  margin:22px auto 0;
+  font-size:18px;
+  color:var(--text-dim);
+  max-width:46ch;
+  position:relative;
+  z-index:1;
+}
+.final-cta .btn{
+  margin-top:40px;
+  position:relative;
+  z-index:1;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  padding:48px 0;
+  border-top:1px solid var(--line-soft);
+}
+.footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+}
+.footer-mark{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:15px;
+}
+.footer-mark span{ color:var(--blue-bright); }
+.footer-note{ font-size:13px; color:var(--text-faint); }
+
+/* ============================================================
+   STICKY MOBILE BAR
+   ============================================================ */
+.sticky-bar{
+  position:fixed;
+  bottom:0; left:0; right:0;
+  z-index:90;
+  background:rgba(10,15,24,0.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  transform:translateY(100%);
+  transition:transform .3s var(--ease);
+}
+.sticky-bar.show{ transform:translateY(0); }
+.sticky-bar-price{ display:flex; flex-direction:column; }
+.sticky-bar-price .old{ font-size:11px; color:var(--text-faint); text-decoration:line-through; }
+.sticky-bar-price .new{ font-family:var(--font-display); font-weight:800; font-size:18px; color:var(--text); }
+.sticky-bar .btn{ padding:13px 22px; font-size:13.5px; flex-shrink:0; }
+@media(max-width:760px){
+  .sticky-bar{ display:flex; }
+}
+
+/* Light mode override (optional toggle) */
+body.light{
+  --bg:#f6f7fa;
+  --bg-alt:#eef0f4;
+  --surface:#ffffff;
+  --surface-2:#ffffff;
+  --line:#dde1e8;
+  --line-soft:#e4e7ed;
+  --text:#0b1420;
+  --text-dim:#51596a;
+  --text-faint:#8690a0;
+  --blue-dim:#e3ecff;
+}
+body.light .mockup-book{
+  background:linear-gradient(155deg,#0e1724 0%,#060a10 65%), radial-gradient(circle at 75% 15%, var(--blue-glow), transparent 55%);
+}
+body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-mark">Musculação <span>Natural</span></div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro e escuro">🌙</button>
+      <a href="#checkout" class="btn btn-primary">Quero o guia</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="hero-kicker">E-book digital · Leitura imediata</span>
+      <h1>Construa um físico mais musculoso e definido — sem depender de atalhos.</h1>
+      <p class="hero-sub">Aprenda como treinamento, hipertrofia, alimentação e recuperação realmente se conectam para construir resultados naturais de forma consistente.</p>
+      <div class="hero-actions">
+        <a href="#checkout" class="btn btn-primary">
+          Quero começar minha evolução
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#modulos" class="btn btn-ghost">Ver conteúdo do guia</a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Acesso digital imediato
+        </div>
+        <div class="hero-trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/></svg>
+          Leia no celular, tablet ou computador
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="mockup-stage">
+        <div class="mockup-float f1">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Conteúdo estruturado
+        </div>
+        <div class="mockup-book">
+          <span class="mockup-badge">Guia completo</span>
+          <h2 class="mockup-title">Musculação<br>Natural<em>Do Zero ao Avançado</em></h2>
+          <div class="mockup-foot">
+            <div>
+              <div class="mockup-foot-label">Formato</div>
+              <div class="mockup-foot-val">E-book digital</div>
+            </div>
+            <div>
+              <div class="mockup-foot-label">Nível</div>
+              <div class="mockup-foot-val">Básico → Avançado</div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-float f2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          12 capítulos
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     PROBLEM
+     ============================================================ -->
+<section class="problem">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O problema</span>
+      <h2>Treinar sem entender o processo tem um teto baixo.</h2>
+      <p>Boa parte de quem treina esbarra nos mesmos pontos — não porque falta esforço, mas porque falta estrutura para entender o que realmente está acontecendo.</p>
+    </div>
+
+    <div class="problem-list">
+      <div class="problem-item reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>Treinar muito sem saber se está certo.</strong> Horas de academia sem confiança de que a execução e o volume fazem sentido.</p>
+      </div>
+      <div class="problem-item reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>Estagnar e não entender por quê.</strong> O progresso para e não fica claro se o problema é treino, comida ou descanso.</p>
+      </div>
+      <div class="problem-item reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>Copiar treinos aleatórios da internet.</strong> Sem entender o princípio por trás, fica impossível adaptar ou saber se ainda serve.</p>
+      </div>
+      <div class="problem-item reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>Não saber quanto comer.</strong> Proteína, carboidrato, caloria — termos conhecidos, mas sem clareza de como aplicá-los no dia a dia.</p>
+      </div>
+      <div class="problem-item reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>Mudar de estratégia toda semana.</strong> Cada vídeo novo traz uma ideia diferente, e a falta de critério trava qualquer consistência.</p>
+      </div>
+      <div class="problem-item reveal">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <p><strong>Negligenciar sono e recuperação.</strong> Tratados como detalhe, quando na prática são parte do resultado tanto quanto o treino.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SOLUTION / PILLARS
+     ============================================================ -->
+<section class="solution">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">A solução</span>
+      <h2>Você não precisa de mais informação. Precisa saber o que fazer com ela.</h2>
+      <p>O guia organiza os fundamentos da musculação natural numa estrutura lógica — do básico ao avançado — para que cada conceito sustente o próximo.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5l11 11M3 6l3-3 3 3-3 3-3-3zM15 18l3-3 3 3-3 3-3-3z"/></svg></div>
+        <h3>Treinamento</h3>
+        <p>Princípios que sustentam qualquer programa — volume, intensidade e execução.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+        <h3>Hipertrofia</h3>
+        <p>Como o músculo realmente cresce e o que de fato estimula esse processo.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <h3>Nutrição</h3>
+        <p>Calorias, proteínas, carboidratos e gorduras aplicados à construção muscular.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20.5a7 7 0 100-14 7 7 0 000 14z"/><path d="M17 3l1.5 1.5M20 7l1.5 1.5M4 17l-1.5 1.5"/></svg></div>
+        <h3>Suplementação</h3>
+        <p>O que tem evidência real e o que é apenas marketing de prateleira.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg></div>
+        <h3>Sono</h3>
+        <p>O papel do descanso na recuperação e na construção de resultados.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="pillar-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0115.5-6.3M21 12a9 9 0 01-15.5 6.3"/><path d="M3 6v5h5M21 18v-5h-5"/></svg></div>
+        <h3>Recuperação</h3>
+        <p>Como o corpo se adapta entre os treinos — e por que isso decide o progresso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULES
+     ============================================================ -->
+<section class="modules" id="modulos">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O que você vai aprender</span>
+      <h2>Do fundamento à estratégia de longo prazo.</h2>
+      <p>Doze capítulos organizados em sequência — cada um constrói sobre o anterior.</p>
+    </div>
+
+    <div class="module-list">
+      <div class="module-row reveal">
+        <span class="module-num">01</span>
+        <div class="module-body"><h3>Fundamentos da musculação natural</h3><p>O que de fato diferencia o treino natural e por que entender isso muda suas expectativas.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">02</span>
+        <div class="module-body"><h3>Como funciona a hipertrofia</h3><p>Os mecanismos por trás do crescimento muscular, explicados em linguagem direta.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">03</span>
+        <div class="module-body"><h3>Princípios do treinamento</h3><p>As bases que sustentam qualquer programa de treino bem construído.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">04</span>
+        <div class="module-body"><h3>Volume, intensidade e progressão</h3><p>Como dosar o estímulo para continuar evoluindo sem estagnar.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">05</span>
+        <div class="module-body"><h3>Execução e técnica</h3><p>Por que a forma como você treina importa tanto quanto o quanto você treina.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">06</span>
+        <div class="module-body"><h3>Nutrição para construção muscular</h3><p>Como a alimentação sustenta o treino e o que de fato precisa de atenção.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">07</span>
+        <div class="module-body"><h3>Calorias e macronutrientes</h3><p>Entendendo proteínas, carboidratos e gorduras sem complicar o que é simples.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">08</span>
+        <div class="module-body"><h3>Suplementação</h3><p>O que tem respaldo real e onde está o exagero do mercado de suplementos.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">09</span>
+        <div class="module-body"><h3>Sono e recuperação</h3><p>Por que ignorar essa parte compromete tudo que você constrói no treino.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">10</span>
+        <div class="module-body"><h3>Erros que atrasam seus resultados</h3><p>Os equívocos mais comuns — e como reconhecê-los antes que custem meses.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">11</span>
+        <div class="module-body"><h3>Estratégias para evolução</h3><p>Como ajustar o processo conforme seu corpo e sua rotina mudam com o tempo.</p></div>
+      </div>
+      <div class="module-row reveal">
+        <span class="module-num">12</span>
+        <div class="module-body"><h3>Pensando a musculação no longo prazo</h3><p>Construindo uma visão que sustenta consistência além dos primeiros meses.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DIFFERENTIATOR
+     ============================================================ -->
+<section class="diff">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O diferencial</span>
+      <h2>Por que este guia é diferente?</h2>
+      <p>Não é mais uma coleção de dicas soltas. É organização, fundamento e uma forma de pensar que conecta treino, alimentação e recuperação.</p>
+    </div>
+
+    <div class="compare">
+      <div class="compare-card bad reveal">
+        <span class="compare-label">Conteúdo aleatório da internet</span>
+        <h3>Fragmentado e contraditório</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg> Dicas soltas sem conexão entre si</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg> Informações que se contradizem</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg> Difícil saber o que é confiável</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg> Sem progressão clara do básico ao avançado</li>
+        </ul>
+      </div>
+      <div class="compare-card good reveal">
+        <span class="compare-label">Musculação Natural — Do Zero ao Avançado</span>
+        <h3>Estruturado e progressivo</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Conceitos conectados em sequência lógica</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Treino, nutrição e recuperação no mesmo lugar</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Linguagem direta, sem jargão desnecessário</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Visão de longo prazo, não solução imediatista</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHO FOR / NOT FOR
+     ============================================================ -->
+<section class="who">
+  <div class="container">
+    <div class="who-grid">
+      <div class="who-card reveal">
+        <h3>Este guia é para você se...</h3>
+        <div class="who-list">
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Está começando na musculação agora</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Já treina, mas sente que está estagnado</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quer entender hipertrofia de verdade</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quer construir um físico de forma natural</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quer melhorar sua alimentação sem complicar</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quer entender suplementação com critério</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quer aprender a estruturar sua própria evolução</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quer parar de depender de informação aleatória</span></div>
+        </div>
+      </div>
+
+      <div class="who-card not reveal">
+        <h3>Este guia não é para você se...</h3>
+        <div class="who-list">
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Procura resultados instantâneos</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Busca uma fórmula milagrosa</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Quer transformação sem esforço</span></div>
+          <div class="who-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Procura prescrição individual de treino ou dieta</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRODUCT SHOWCASE
+     ============================================================ -->
+<section class="showcase">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">O material</span>
+      <h2>Leia onde for melhor para você.</h2>
+      <p>Material 100% digital, organizado para leitura confortável em qualquer tela.</p>
+    </div>
+
+    <div class="showcase-stage">
+      <div class="device reveal">
+        <div class="device-screen">
+          <span class="device-chip">Capítulo 03</span>
+          <div class="device-caption-title">Princípios do treinamento</div>
+          <div class="device-lines"><span></span><span></span><span></span></div>
+        </div>
+        <p class="device-caption">Tablet</p>
+      </div>
+
+      <div class="device notebook reveal">
+        <div class="device-screen">
+          <span class="device-chip">Sumário</span>
+          <div class="device-caption-title">12 capítulos — do básico ao avançado</div>
+          <div class="device-lines"><span></span><span></span><span></span></div>
+        </div>
+        <p class="device-caption">Notebook</p>
+      </div>
+
+      <div class="device phone reveal">
+        <div class="device-screen">
+          <span class="device-chip">Capítulo 09</span>
+          <div class="device-caption-title">Sono e recuperação</div>
+          <div class="device-lines"><span></span><span></span><span></span></div>
+        </div>
+        <p class="device-caption">Smartphone</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHAT YOU GET
+     ============================================================ -->
+<section class="includes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O pacote</span>
+      <h2>Você recebe tudo isso:</h2>
+    </div>
+
+    <div class="includes-grid">
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/></svg></div>
+        <span>E-book completo — do básico ao avançado</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <span>Acesso digital imediato após a compra</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/></svg></div>
+        <span>Leitura em celular, tablet e computador</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg></div>
+        <span>Conteúdo estruturado em sequência lógica</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5l11 11M3 6l3-3 3 3-3 3-3-3zM15 18l3-3 3 3-3 3-3-3z"/></svg></div>
+        <span>Fundamentos de treinamento e hipertrofia</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7z"/></svg></div>
+        <span>Fundamentos de nutrição aplicados ao treino</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20.5a7 7 0 100-14 7 7 0 000 14z"/></svg></div>
+        <span>Conteúdo sobre suplementação com critério</span>
+      </div>
+      <div class="includes-item reveal">
+        <div class="includes-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg></div>
+        <span>Capítulo dedicado a sono e recuperação</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CLARITY / BENEFITS
+     ============================================================ -->
+<section class="clarity">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Depois de estudar o guia</span>
+      <h2>Você terá mais clareza para...</h2>
+    </div>
+
+    <div class="clarity-list">
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Entender o que realmente importa dentro do treino e da alimentação.</p></div>
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Interpretar melhor qualquer informação nova sobre musculação que encontrar.</p></div>
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Tomar decisões mais conscientes sobre sua rotina de treino.</p></div>
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Entender de fato o processo por trás da hipertrofia.</p></div>
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Organizar melhor treino, alimentação e descanso no dia a dia.</p></div>
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Identificar erros antes que custem meses de progresso.</p></div>
+      <div class="clarity-item reveal"><span class="clarity-num">—</span><p>Construir uma visão de longo prazo em vez de soluções imediatistas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     OFFER
+     ============================================================ -->
+<section class="offer" id="oferta">
+  <div class="container">
+    <div class="offer-card reveal">
+      <span class="offer-tag">Acesso digital vitalício</span>
+      <h3>Musculação Natural — Do Zero ao Avançado</h3>
+      <div class="offer-price-row">
+        <span class="offer-old">De R$ 39,90</span>
+        <span class="offer-new">R$ 29,90</span>
+      </div>
+      <p class="offer-note">Pagamento único · sem assinatura</p>
+
+      <ul class="offer-features">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> E-book completo com 12 capítulos</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Acesso imediato após a confirmação</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Leitura em qualquer dispositivo</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Pagamento processado pela Kiwify</li>
+      </ul>
+
+      <a href="#checkout" class="btn btn-primary btn-block">Quero ter acesso ao guia</a>
+      <p class="offer-fine">Compra processada em ambiente seguro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GUARANTEE
+     ============================================================ -->
+<section class="guarantee">
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div>
+        <h3>Garantia</h3>
+        <p>Sua compra é protegida pela política de garantia do checkout.</p>
+        <span class="guarantee-placeholder">[INSIRA A GARANTIA REAL DO PRODUTO AQUI]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="faq">
+  <div class="container">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2>Ainda com dúvidas?</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">É para iniciantes?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. O conteúdo começa pelos fundamentos e avança progressivamente, então funciona bem tanto para quem está começando quanto para quem já treina.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">Preciso treinar há muito tempo?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Não. O guia foi estruturado para ser compreendido independentemente do seu tempo de treino — os conceitos são explicados do zero.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">O material é físico ou digital?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">É um material 100% digital. Após a confirmação da compra, você recebe acesso para leitura online.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">Posso acessar pelo celular?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. O conteúdo foi organizado para leitura confortável em celular, tablet ou computador.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">O conteúdo serve para quem já treina?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Sim. Quem já treina costuma se beneficiar especialmente dos capítulos sobre progressão, estratégias de longo prazo e correção de erros comuns.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">O guia possui ficha de treino individual?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Não. O material tem caráter educacional e ensina os princípios por trás do treinamento. Ele não substitui uma prescrição individualizada de treino ou dieta.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">É necessário usar suplementos?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Não. O guia explica o papel da suplementação com base em evidências, mas os resultados dependem principalmente de treino, alimentação e recuperação.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">Como recebo o material?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Após a confirmação do pagamento pela Kiwify, você recebe o acesso diretamente por e-mail.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">Existe garantia?<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">A garantia segue a política configurada no checkout. [INSIRA A GARANTIA REAL DO PRODUTO AQUI]</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Seu físico não muda por acaso.</h2>
+    <p>Entenda o processo. Treine com propósito. Alimente-se melhor. Recupere-se. Evolua.</p>
+    <a href="#checkout" class="btn btn-primary">
+      Quero começar agora
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="container footer-row">
+    <div class="footer-mark">Musculação <span>Natural</span></div>
+    <p class="footer-note">Material educacional. Não substitui orientação de profissional de educação física ou nutricionista.</p>
+  </div>
+</footer>
+
+<!-- ============================================================
+     STICKY MOBILE BAR
+     ============================================================ -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-bar-price">
+    <span class="old">R$ 39,90</span>
+    <span class="new">R$ 29,90</span>
+  </div>
+  <a href="#checkout" class="btn btn-primary">Quero o guia</a>
+</div>
+
+<script>
+// Nav background on scroll
+const nav = document.getElementById('nav');
+const stickyBar = document.getElementById('stickyBar');
+const offerSection = document.getElementById('oferta');
+
+function onScroll(){
+  if(window.scrollY > 40){ nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+
+  if(offerSection){
+    const rect = offerSection.getBoundingClientRect();
+    const pastHero = window.scrollY > window.innerHeight * 0.9;
+    const beforeOffer = rect.top > window.innerHeight * 0.3;
+    if(pastHero && beforeOffer){ stickyBar.classList.add('show'); }
+    else { stickyBar.classList.remove('show'); }
+  }
+}
+window.addEventListener('scroll', onScroll, { passive:true });
+onScroll();
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+  revealEls.forEach(el=>io.observe(el));
+} else {
+  revealEls.forEach(el=>el.classList.add('is-visible'));
+}
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const btn = item.querySelector('.faq-q');
+  const panel = item.querySelector('.faq-a');
+  btn.addEventListener('click', ()=>{
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(openItem=>{
+      if(openItem !== item){
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        openItem.querySelector('.faq-a').style.maxHeight = null;
+      }
+    });
+    if(isOpen){
+      item.classList.remove('open');
+      btn.setAttribute('aria-expanded','false');
+      panel.style.maxHeight = null;
+    } else {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+  });
+});
+
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+const savedTheme = localStorage.getItem('mn-theme');
+if(savedTheme === 'light'){
+  document.body.classList.add('light');
+  themeToggle.textContent = '☀';
+}
+themeToggle.addEventListener('click', ()=>{
+  const isLight = document.body.classList.toggle('light');
+  themeToggle.textContent = isLight ? '☀' : '🌙';
+  localStorage.setItem('mn-theme', isLight ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
