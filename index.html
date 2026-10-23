@@ -11,6 +11,49 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+     CONFIGURAÇÃO — edite só este bloco
+     ============================================================ -->
+<script>
+window.MN = {
+  checkout:   'https://pay.kiwify.com.br/FxkQ8Xl',
+  precoCheio: 59.90,                         // preço depois da promoção
+  precoPromo: 29.90,                         // preço de lançamento
+  fimPromo:   '2026-10-31T23:59:59-03:00',   // quando a promoção acaba (horário de Brasília)
+  metaPixelId: '',                           // ex.: '123456789012345'  (Gerenciador de Eventos da Meta)
+  clarityId:   ''                            // ex.: 'k3x9abcd12'       (clarity.microsoft.com)
+};
+window.MN.promoAtiva = Date.now() < new Date(window.MN.fimPromo).getTime();
+window.MN.precoAtual = window.MN.promoAtiva ? window.MN.precoPromo : window.MN.precoCheio;
+</script>
+
+<!-- Métricas: só carregam quando o ID está preenchido acima -->
+<script>
+(function(){
+  var C = window.MN;
+  // Microsoft Clarity — mapas de calor e gravações de sessão
+  if (C.clarityId) {
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", C.clarityId);
+  }
+  // Pixel da Meta — PageView, ViewContent e InitiateCheckout
+  if (C.metaPixelId) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', C.metaPixelId);
+    fbq('track', 'PageView');
+  }
+})();
+</script>
 <style>
 /* ============================================================
    TOKENS
@@ -1002,6 +1045,93 @@ footer{
   .sticky-bar{ display:flex; }
 }
 
+
+/* ============================================================
+   PROMO — faixa de lançamento, âncora de preço, contagem
+   ============================================================ */
+:root{ --promo-h:0px; }
+body.promo-on{ --promo-h:42px; }
+.promo-bar{
+  position:fixed; top:0; left:0; right:0; z-index:110;
+  height:var(--promo-h);
+  display:none; align-items:center; justify-content:center; gap:12px;
+  padding:0 16px;
+  background:linear-gradient(90deg, #0b3fd1, var(--blue) 45%, #2a8dff);
+  color:#fff; font-family:var(--font-display); font-weight:700; font-size:13.5px;
+  text-decoration:none; white-space:nowrap; overflow:hidden;
+}
+body.promo-on .promo-bar{ display:flex; }
+.promo-bar b{ font-weight:800; }
+.promo-bar s{ opacity:.75; font-weight:600; }
+.promo-bar .pb-time{
+  font-variant-numeric:tabular-nums;
+  background:rgba(0,0,0,.28); padding:4px 9px; border-radius:6px;
+}
+.promo-bar .pb-go{ text-decoration:underline; text-underline-offset:3px; }
+.pb-short{ display:none; }
+@media(max-width:640px){
+  .promo-bar{ font-size:12.5px; gap:8px; }
+  .pb-long, .promo-bar .pb-go{ display:none; }
+  .pb-short{ display:inline; }
+}
+.nav{ top:var(--promo-h) !important; }
+.hero{ margin-top:var(--promo-h); }
+
+[hidden]{ display:none !important; }
+body:not(.promo-on) [data-promo-only]{ display:none !important; }
+
+.hero-price{
+  display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px;
+  margin-top:18px; font-size:14px; color:var(--text-dim);
+}
+.hero-price s{ color:var(--text-faint); }
+.hero-price strong{ font-family:var(--font-display); font-size:22px; font-weight:800; color:var(--text); }
+.chip-off{
+  display:inline-block; font-family:var(--font-display); font-weight:800; font-size:12px;
+  letter-spacing:.02em; color:#fff; background:var(--blue); padding:4px 9px; border-radius:999px;
+}
+.offer-save{
+  display:inline-block; margin:10px 0 4px; font-size:13.5px; font-weight:600;
+  color:var(--blue-bright);
+}
+.offer-old{ font-size:20px; }
+.offer-urgency{
+  margin:20px 0 28px; padding:16px 18px;
+  border:1px solid var(--blue-dim); border-radius:var(--radius-m);
+  background:rgba(21,96,255,0.07);
+}
+.offer-urgency p{ font-size:14px; color:var(--text); font-weight:600; margin-bottom:12px; }
+.offer-urgency p span{ color:var(--text-dim); font-weight:500; }
+.countdown{ display:flex; justify-content:center; gap:8px; }
+.countdown div{
+  min-width:62px; padding:10px 6px 8px; border-radius:8px;
+  background:var(--bg); border:1px solid var(--line);
+  font-family:var(--font-display); font-weight:800; font-size:24px; line-height:1;
+  color:var(--text); font-variant-numeric:tabular-nums;
+}
+.countdown small{
+  display:block; margin-top:5px; font-family:var(--font-body); font-weight:500;
+  font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em;
+}
+.btn-buy{ font-size:17px; padding:20px 30px; animation:mnPulse 2.4s var(--ease) infinite; }
+@keyframes mnPulse{
+  0%,100%{ box-shadow:0 1px 0 rgba(255,255,255,0.15) inset, 0 12px 30px -10px var(--blue-glow), 0 0 0 0 rgba(21,96,255,.45); }
+  60%{ box-shadow:0 1px 0 rgba(255,255,255,0.15) inset, 0 12px 30px -10px var(--blue-glow), 0 0 0 14px rgba(21,96,255,0); }
+}
+@media (prefers-reduced-motion: reduce){ .btn-buy{ animation:none; } }
+.trust-row{
+  display:flex; justify-content:center; flex-wrap:wrap; gap:6px 16px;
+  margin-top:16px; font-size:12.5px; color:var(--text-faint);
+}
+.final-urgency{ margin-top:18px; font-size:14px; color:var(--text-dim); }
+.final-urgency b{ color:var(--text); font-variant-numeric:tabular-nums; }
+.sticky-bar-price .tag{ font-size:10.5px; font-weight:700; color:var(--blue-bright); font-variant-numeric:tabular-nums; }
+.footer-privacy{ font-size:11.5px; color:var(--text-faint); margin-top:10px; }
+@media(max-width:560px){
+  .countdown div{ min-width:54px; font-size:21px; }
+  .offer-card{ padding:40px 22px !important; }
+}
+
 /* Light mode override (optional toggle) */
 body.light{
   --bg:#f6f7fa;
@@ -1021,7 +1151,17 @@ body.light .mockup-book{
 body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
 </style>
 </head>
-<body>
+<body class="promo-on">
+<!-- ============================================================
+     FAIXA DE LANÇAMENTO (some sozinha quando a promoção acaba)
+     ============================================================ -->
+<a class="promo-bar" href="https://pay.kiwify.com.br/FxkQ8Xl" data-local="faixa_topo" data-promo-only>
+  <span class="pb-long">🔥 Preço de lançamento: <s>R$&nbsp;<span data-preco-cheio>59,90</span></s> por <b>R$&nbsp;<span data-preco>29,90</span></b> · termina em</span>
+  <span class="pb-short">🔥 <b>50% OFF</b> de lançamento · termina em</span>
+  <span class="pb-time" data-countdown-inline>--</span>
+  <span class="pb-go">Garantir agora →</span>
+</a>
+
 
 <!-- ============================================================
      NAV
@@ -1031,7 +1171,7 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
     <div class="nav-mark">Musculação <span>Natural</span></div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro e escuro">🌙</button>
-      <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary">Quero o guia</a>
+      <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary" data-local="menu">Quero o guia</a>
     </div>
   </div>
 </nav>
@@ -1046,11 +1186,17 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
       <h1>Construa um físico mais musculoso e definido — sem depender de atalhos.</h1>
       <p class="hero-sub">Aprenda como treinamento, hipertrofia, alimentação e recuperação realmente se conectam para construir resultados naturais de forma consistente.</p>
       <div class="hero-actions">
-        <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary">
-          Quero começar minha evolução
+        <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary" data-local="hero">
+          <span>Quero o guia por R$&nbsp;<span data-preco>29,90</span></span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
         <a href="#modulos" class="btn btn-ghost">Ver conteúdo do guia</a>
+      </div>
+      <div class="hero-price" data-promo-only>
+        <span class="chip-off"><span data-desconto>50</span>% OFF</span>
+        <s>R$&nbsp;<span data-preco-cheio>59,90</span></s>
+        <strong>R$&nbsp;<span data-preco>29,90</span></strong>
+        <span>preço de lançamento até <span data-fim-txt>31/10</span></span>
       </div>
       <div class="hero-trust">
         <div class="hero-trust-item">
@@ -1086,7 +1232,7 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
         </div>
         <div class="mockup-float f2">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          12 capítulos
+          8 capítulos
         </div>
       </div>
     </div>
@@ -1187,57 +1333,41 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
     <div class="section-head reveal">
       <span class="eyebrow">O que você vai aprender</span>
       <h2>Do fundamento à estratégia de longo prazo.</h2>
-      <p>Doze capítulos organizados em sequência — cada um constrói sobre o anterior.</p>
+      <p>Oito capítulos organizados em sequência — cada um constrói sobre o anterior.</p>
     </div>
 
     <div class="module-list">
       <div class="module-row reveal">
         <span class="module-num">01</span>
-        <div class="module-body"><h3>Fundamentos da musculação natural</h3><p>O que de fato diferencia o treino natural e por que entender isso muda suas expectativas.</p></div>
+        <div class="module-body"><h3>A verdade sobre a musculação natural</h3><p>Expectativas realistas, consistência, adaptação e o que esperar no longo prazo.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">02</span>
-        <div class="module-body"><h3>Como funciona a hipertrofia</h3><p>Os mecanismos por trás do crescimento muscular, explicados em linguagem direta.</p></div>
+        <div class="module-body"><h3>Como o músculo cresce</h3><p>Hipertrofia, tensão mecânica, esforço, faixas de repetições e síntese proteica.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">03</span>
-        <div class="module-body"><h3>Princípios do treinamento</h3><p>As bases que sustentam qualquer programa de treino bem construído.</p></div>
+        <div class="module-body"><h3>Como estruturar um bom treino</h3><p>Volume, frequência, intensidade, escolha de exercícios e progressão.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">04</span>
-        <div class="module-body"><h3>Volume, intensidade e progressão</h3><p>Como dosar o estímulo para continuar evoluindo sem estagnar.</p></div>
+        <div class="module-body"><h3>Nutrição para ganho e perda de gordura</h3><p>Calorias, proteína, carboidratos, gorduras, refeições e aderência.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">05</span>
-        <div class="module-body"><h3>Execução e técnica</h3><p>Por que a forma como você treina importa tanto quanto o quanto você treina.</p></div>
+        <div class="module-body"><h3>Suplementação com critério</h3><p>Creatina, cafeína, whey, beta-alanina e o que depende do contexto.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">06</span>
-        <div class="module-body"><h3>Nutrição para construção muscular</h3><p>Como a alimentação sustenta o treino e o que de fato precisa de atenção.</p></div>
+        <div class="module-body"><h3>Sono, recuperação e cardio</h3><p>Sono, fadiga, descanso, atividade aeróbica e mobilidade.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">07</span>
-        <div class="module-body"><h3>Calorias e macronutrientes</h3><p>Entendendo proteínas, carboidratos e gorduras sem complicar o que é simples.</p></div>
+        <div class="module-body"><h3>Erros e mitos que atrapalham</h3><p>Falhas comuns, crenças do meio fitness e ajustes práticos.</p></div>
       </div>
       <div class="module-row reveal">
         <span class="module-num">08</span>
-        <div class="module-body"><h3>Suplementação</h3><p>O que tem respaldo real e onde está o exagero do mercado de suplementos.</p></div>
-      </div>
-      <div class="module-row reveal">
-        <span class="module-num">09</span>
-        <div class="module-body"><h3>Sono e recuperação</h3><p>Por que ignorar essa parte compromete tudo que você constrói no treino.</p></div>
-      </div>
-      <div class="module-row reveal">
-        <span class="module-num">10</span>
-        <div class="module-body"><h3>Erros que atrasam seus resultados</h3><p>Os equívocos mais comuns — e como reconhecê-los antes que custem meses.</p></div>
-      </div>
-      <div class="module-row reveal">
-        <span class="module-num">11</span>
-        <div class="module-body"><h3>Estratégias para evolução</h3><p>Como ajustar o processo conforme seu corpo e sua rotina mudam com o tempo.</p></div>
-      </div>
-      <div class="module-row reveal">
-        <span class="module-num">12</span>
-        <div class="module-body"><h3>Pensando a musculação no longo prazo</h3><p>Construindo uma visão que sustenta consistência além dos primeiros meses.</p></div>
+        <div class="module-body"><h3>Estratégias avançadas e monitoramento</h3><p>Periodização, deload, técnicas avançadas, métricas e longo prazo.</p></div>
       </div>
     </div>
   </div>
@@ -1336,7 +1466,7 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
       <div class="device notebook reveal">
         <div class="device-screen">
           <span class="device-chip">Sumário</span>
-          <div class="device-caption-title">12 capítulos — do básico ao avançado</div>
+          <div class="device-caption-title">8 capítulos — do básico ao avançado</div>
           <div class="device-lines"><span></span><span></span><span></span></div>
         </div>
         <p class="device-caption">Notebook</p>
@@ -1429,23 +1559,37 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
 <section class="offer" id="oferta">
   <div class="container">
     <div class="offer-card reveal">
-      <span class="offer-tag">Acesso digital vitalício</span>
+      <span class="offer-tag" data-promo-only>🔥 Preço de lançamento · <span data-desconto>50</span>% OFF</span>
+      <span class="offer-tag" data-promo-off hidden>Acesso digital vitalício</span>
       <h3>Musculação Natural — Do Zero ao Avançado</h3>
       <div class="offer-price-row">
-        <span class="offer-old">De R$ 39,90</span>
-        <span class="offer-new">R$ 29,90</span>
+        <span class="offer-old" data-promo-only>De R$&nbsp;<span data-preco-cheio>59,90</span></span>
+        <span class="offer-new">R$&nbsp;<span data-preco>29,90</span></span>
       </div>
-      <p class="offer-note">Pagamento único · sem assinatura</p>
+      <span class="offer-save" data-promo-only>Você economiza R$&nbsp;<span data-economia>30,00</span></span>
+      <p class="offer-note">Pagamento único · sem assinatura · acesso vitalício</p>
+
+      <div class="offer-urgency" data-promo-only>
+        <p>⏳ Não perca essa promoção. <span>Em <span data-fim-txt>31/10</span> às 23h59 o preço volta para R$&nbsp;<span data-preco-cheio>59,90</span>.</span></p>
+        <div class="countdown" data-countdown>
+          <div><span data-d>00</span><small>dias</small></div>
+          <div><span data-h>00</span><small>horas</small></div>
+          <div><span data-m>00</span><small>min</small></div>
+          <div><span data-s>00</span><small>seg</small></div>
+        </div>
+      </div>
 
       <ul class="offer-features">
-        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> E-book completo com 12 capítulos</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> E-book completo com 8 capítulos</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Acesso imediato após a confirmação</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Leitura em qualquer dispositivo</li>
         <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg> Pagamento processado pela Kiwify</li>
       </ul>
 
-      <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary btn-block">Quero ter acesso ao guia</a>
-      <p class="offer-fine">Compra processada em ambiente seguro.</p>
+      <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary btn-block btn-buy" data-local="oferta" id="offerBtn"><span>Quero o guia por R$&nbsp;<span data-preco>29,90</span></span></a>
+      <div class="trust-row">
+        <span>⚡ Acesso imediato</span><span>🛡️ Garantia de 7 dias</span><span>🔒 Compra segura pela Kiwify</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1523,10 +1667,11 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
   <div class="container">
     <h2>Seu físico não muda por acaso.</h2>
     <p>Entenda o processo. Treine com propósito. Alimente-se melhor. Recupere-se. Evolua.</p>
-    <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary">
-      Quero começar agora
+    <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary btn-buy" data-local="final">
+      <span>Quero o guia por R$&nbsp;<span data-preco>29,90</span></span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
+    <p class="final-urgency" data-promo-only>Preço de lançamento termina em <b data-countdown-inline>--</b></p>
   </div>
 </section>
 
@@ -1537,6 +1682,7 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
   <div class="container footer-row">
     <div class="footer-mark">Musculação <span>Natural</span></div>
     <p class="footer-note">Material educacional. Não substitui orientação de profissional de educação física ou nutricionista.</p>
+    <p class="footer-privacy">Esta página usa ferramentas de medição (Meta Pixel e Microsoft Clarity) para entender como ela é usada e melhorar os anúncios.</p>
   </div>
 </footer>
 
@@ -1545,10 +1691,11 @@ body.light .device-screen{ background:linear-gradient(155deg,#0e1724,#060a10); }
      ============================================================ -->
 <div class="sticky-bar" id="stickyBar">
   <div class="sticky-bar-price">
-    <span class="old">R$ 39,90</span>
-    <span class="new">R$ 29,90</span>
+    <span class="old" data-promo-only>R$&nbsp;<span data-preco-cheio>59,90</span></span>
+    <span class="new">R$&nbsp;<span data-preco>29,90</span></span>
+    <span class="tag" data-promo-only>⏳ <span data-countdown-inline>--</span></span>
   </div>
-  <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary">Quero o guia</a>
+  <a href="https://pay.kiwify.com.br/FxkQ8Xl" class="btn btn-primary" data-local="barra_celular">Comprar agora</a>
 </div>
 
 <script>
@@ -1560,13 +1707,15 @@ const offerSection = document.getElementById('oferta');
 function onScroll(){
   if(window.scrollY > 40){ nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
 
-  if(offerSection){
-    const rect = offerSection.getBoundingClientRect();
-    const pastHero = window.scrollY > window.innerHeight * 0.9;
-    const beforeOffer = rect.top > window.innerHeight * 0.3;
-    if(pastHero && beforeOffer){ stickyBar.classList.add('show'); }
-    else { stickyBar.classList.remove('show'); }
+  const ob = document.getElementById('offerBtn');
+  const pastHero = window.scrollY > window.innerHeight * 0.7;
+  let offerBtnVisible = false;
+  if(ob){
+    const r = ob.getBoundingClientRect();
+    offerBtnVisible = r.bottom > 0 && r.top < window.innerHeight;
   }
+  if(pastHero && !offerBtnVisible){ stickyBar.classList.add('show'); }
+  else { stickyBar.classList.remove('show'); }
 }
 window.addEventListener('scroll', onScroll, { passive:true });
 onScroll();
@@ -1612,9 +1761,101 @@ document.querySelectorAll('.faq-item').forEach(item=>{
   });
 });
 
+
+// ============================================================
+// PROMO: preços, contagem regressiva real e fim automático
+// ============================================================
+(function(){
+  const C = window.MN;
+  const brl = v => v.toFixed(2).replace('.', ',');
+  const fim = new Date(C.fimPromo);
+  document.body.classList.toggle('promo-on', C.promoAtiva);
+  document.querySelectorAll('[data-promo-off]').forEach(el => el.hidden = C.promoAtiva);
+  document.querySelectorAll('[data-preco]').forEach(el => el.textContent = brl(C.precoAtual));
+  document.querySelectorAll('[data-preco-cheio]').forEach(el => el.textContent = brl(C.precoCheio));
+  document.querySelectorAll('[data-economia]').forEach(el => el.textContent = brl(C.precoCheio - C.precoPromo));
+  document.querySelectorAll('[data-desconto]').forEach(el => el.textContent = Math.round((1 - C.precoPromo / C.precoCheio) * 100));
+  const fimTxt = fim.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', timeZone:'America/Sao_Paulo' });
+  document.querySelectorAll('[data-fim-txt]').forEach(el => el.textContent = fimTxt);
+  if(!C.promoAtiva) return;
+
+  const pad = n => String(n).padStart(2, '0');
+  function tick(){
+    let ms = fim.getTime() - Date.now();
+    if(ms <= 0){ location.reload(); return; }       // acabou: recarrega e a página volta ao preço cheio
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
+    document.querySelectorAll('[data-countdown]').forEach(cd => {
+      cd.querySelector('[data-d]').textContent = pad(d);
+      cd.querySelector('[data-h]').textContent = pad(h);
+      cd.querySelector('[data-m]').textContent = pad(m);
+      cd.querySelector('[data-s]').textContent = pad(ss);
+    });
+    const inline = (d > 0 ? d + 'd ' : '') + pad(h) + ':' + pad(m) + ':' + pad(ss);
+    document.querySelectorAll('[data-countdown-inline]').forEach(el => el.textContent = inline);
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+// ============================================================
+// MÉTRICAS: UTMs repassadas ao checkout + eventos de clique
+// ============================================================
+(function(){
+  const C = window.MN;
+  const KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src','sck'];
+  const url = new URL(location.href);
+  let utm = {};
+  try { utm = JSON.parse(sessionStorage.getItem('mn-utm') || '{}'); } catch(e){}
+  KEYS.forEach(k => { const v = url.searchParams.get(k); if(v) utm[k] = v; });
+  try { sessionStorage.setItem('mn-utm', JSON.stringify(utm)); } catch(e){}
+
+  // cola as UTMs em todos os links do checkout (a Kiwify registra a origem de cada venda)
+  const links = document.querySelectorAll('a[href*="pay.kiwify.com.br"]');
+  links.forEach(a => {
+    const u = new URL(a.href);
+    Object.entries(utm).forEach(([k,v]) => u.searchParams.set(k, v));
+    a.href = u.toString();
+  });
+
+  // origem da visita no Clarity (filtrável no painel)
+  if(window.clarity){
+    clarity('set', 'origem', utm.utm_source || 'direto');
+    if(utm.utm_campaign) clarity('set', 'campanha', utm.utm_campaign);
+    if(utm.utm_content)  clarity('set', 'criativo', utm.utm_content);
+    clarity('set', 'promo', C.promoAtiva ? 'ativa' : 'encerrada');
+  }
+
+  // ViewContent quando a pessoa chega na oferta
+  const oferta = document.getElementById('oferta');
+  if(oferta && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver(es => {
+      if(es.some(e => e.isIntersecting)){
+        if(window.fbq) fbq('track', 'ViewContent', { content_name:'Musculação Natural', value:C.precoAtual, currency:'BRL' });
+        if(window.clarity) clarity('event', 'viu_oferta');
+        io.disconnect();
+      }
+    }, { threshold:0.35 });
+    io.observe(oferta);
+  }
+
+  // InitiateCheckout em cada botão de compra (com o nome do botão)
+  links.forEach(a => a.addEventListener('click', ev => {
+    const local = a.dataset.local || 'outro';
+    if(window.clarity){ clarity('set', 'botao', local); clarity('event', 'clique_comprar'); }
+    if(window.fbq){
+      fbq('track', 'InitiateCheckout', { content_name:'Musculação Natural', value:C.precoAtual, currency:'BRL', botao:local });
+      // segura 250 ms para o evento sair antes de abrir o checkout (exceto ctrl/cmd+clique)
+      if(!(ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0)){
+        ev.preventDefault();
+        setTimeout(() => { location.href = a.href; }, 250);
+      }
+    }
+  }));
+})();
+
 // Theme toggle
 const themeToggle = document.getElementById('themeToggle');
-const savedTheme = localStorage.getItem('mn-theme');
+let savedTheme = null; try { savedTheme = localStorage.getItem('mn-theme'); } catch(e){}
 if(savedTheme === 'light'){
   document.body.classList.add('light');
   themeToggle.textContent = '☀';
@@ -1622,7 +1863,7 @@ if(savedTheme === 'light'){
 themeToggle.addEventListener('click', ()=>{
   const isLight = document.body.classList.toggle('light');
   themeToggle.textContent = isLight ? '☀' : '🌙';
-  localStorage.setItem('mn-theme', isLight ? 'light' : 'dark');
+  try { localStorage.setItem('mn-theme', isLight ? 'light' : 'dark'); } catch(e){}
 });
 </script>
 
